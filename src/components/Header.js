@@ -1,21 +1,22 @@
 export default function Header() {
   return (
-    <header className="absolute w-full z-50 px-4">
-      <div className="container mx-auto py-5">
-        <div className="flex flex-stretch items-center">
-          <div className="w-56 items-center flex">
+    <header className="absolute z-50 w-full px-4">
+      <div className="container py-5 mx-auto">
+        <div className="flex items-center flex-stretch">
+          <div className="flex items-center w-56">
             <img
               src="images/content/logo.png"
               alt="Luxspace | Fulfill your house with beautiful furniture"
+              className="cursor-pointer"
             />
           </div>
           <div className="w-full"></div>
           <div className="w-auto">
             <ul
-              className="fixed bg-white inset-0 flex flex-col invisible items-center justify-center opacity-0 md:visible md:flex-row md:bg-transparent md:relative md:opacity-100 md:flex md:items-center"
+              className="fixed inset-0 flex flex-col items-center justify-center invisible bg-white opacity-0 md:visible md:flex-row md:bg-transparent md:relative md:opacity-100 md:flex md:items-center"
               id="menu"
             >
-              <li className="mx-3 py-6 md:py-0">
+              <li className="py-6 mx-3 md:py-0">
                 <a
                   href="/"
                   className="text-black md:text-white hover:underline"
@@ -23,7 +24,7 @@ export default function Header() {
                   Showcase
                 </a>
               </li>
-              <li className="mx-3 py-6 md:py-0">
+              <li className="py-6 mx-3 md:py-0">
                 <a
                   href="/"
                   className="text-black md:text-white hover:underline"
@@ -31,7 +32,7 @@ export default function Header() {
                   Catalog
                 </a>
               </li>
-              <li className="mx-3 py-6 md:py-0">
+              <li className="py-6 mx-3 md:py-0">
                 <a
                   href="/"
                   className="text-black md:text-white hover:underline"
@@ -39,7 +40,7 @@ export default function Header() {
                   Delivery
                 </a>
               </li>
-              <li className="mx-3 py-6 md:py-0">
+              <li className="py-6 mx-3 md:py-0">
                 <a
                   href="/"
                   className="text-black md:text-white hover:underline"
@@ -50,11 +51,11 @@ export default function Header() {
             </ul>
           </div>
           <div className="w-auto">
-            <ul className="items-center flex">
-              <li className="ml-6 block md:hidden">
+            <ul className="flex items-center">
+              <li className="block ml-6 md:hidden">
                 <button
                   id="menu-toggler"
-                  className="relative flex z-50 items-center justify-center w-8 h-8 text-black md:text-white focus:outline-none"
+                  className="relative z-50 flex items-center justify-center w-8 h-8 text-black md:text-white focus:outline-none"
                 >
                   <svg
                     className="fill-current"
