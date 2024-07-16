@@ -2,6 +2,7 @@ const currencyFormatter = (price) => {
   const currency = Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",
+    minimumFractionDigits: 0,
   });
 
   return currency.format(price);

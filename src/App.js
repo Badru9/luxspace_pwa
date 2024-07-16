@@ -17,8 +17,15 @@ const App = () => {
   }
 
   const fetchItems = async () => {
-    const response = await fetch(process.env.REACT_APP_APIKEY);
+    const response = await fetch("https://bwacharity.fly.dev/items", {
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+
     const { nodes } = await response.json();
+
     setItems(nodes);
   };
 
