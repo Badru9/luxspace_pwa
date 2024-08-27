@@ -7,11 +7,11 @@
 // You can also remove this file if you'd prefer not to use a
 // service worker, and the Workbox build step will be skipped.
 
-import { clientsClaim } from "workbox-core";
-import { ExpirationPlugin } from "workbox-expiration";
-import { precacheAndRoute, createHandlerBoundToURL } from "workbox-precaching";
-import { registerRoute } from "workbox-routing";
-import { NetworkFirst, StaleWhileRevalidate } from "workbox-strategies";
+import { clientsClaim } from 'workbox-core';
+import { ExpirationPlugin } from 'workbox-expiration';
+import { precacheAndRoute, createHandlerBoundToURL } from 'workbox-precaching';
+import { registerRoute } from 'workbox-routing';
+import { NetworkFirst, StaleWhileRevalidate } from 'workbox-strategies';
 
 clientsClaim();
 
@@ -24,16 +24,16 @@ precacheAndRoute(self.__WB_MANIFEST);
 // Set up App Shell-style routing, so that all navigation requests
 // are fulfilled with your index.html shell. Learn more at
 // https://developers.google.com/web/fundamentals/architecture/app-shell
-const fileExtensionRegexp = new RegExp("/[^/?]+\\.[^/]+$");
+const fileExtensionRegexp = new RegExp('/[^/?]+\\.[^/]+$');
 registerRoute(
   // Return false to exempt requests from being fulfilled by index.html.
   ({ request, url }) => {
     // If this isn't a navigation, skip.
-    if (request.mode !== "navigate") {
+    if (request.mode !== 'navigate') {
       return false;
     } // If this is a URL that starts with /_, skip.
 
-    if (url.pathname.startsWith("/_")) {
+    if (url.pathname.startsWith('/_')) {
       return false;
     } // If this looks like a URL for a resource, because it contains // a file extension, skip.
 
@@ -43,7 +43,7 @@ registerRoute(
 
     return true;
   },
-  createHandlerBoundToURL(process.env.PUBLIC_URL + "/index.html")
+  createHandlerBoundToURL(process.env.PUBLIC_URL + '/index.html')
 );
 
 // An example runtime caching route for requests that aren't handled by the
@@ -54,7 +54,7 @@ registerRoute(
     url.origin === self.location.origin &&
     /\.(jpe?g|png|svg|ico)$/i.test(url.pathname), // Customize this strategy as needed, e.g., by changing to CacheFirst.
   new StaleWhileRevalidate({
-    cacheName: "images",
+    cacheName: 'images',
     plugins: [
       // Ensure that once this runtime cache reaches a maximum size the
       // least-recently used images are removed.
@@ -65,10 +65,10 @@ registerRoute(
 
 registerRoute(
   ({ url }) =>
-    url.origin === "https://fonts.googleapis.com" ||
-    url.origin === "https://fonts.gstatic.om",
+    url.origin === 'https://fonts.googleapis.com' ||
+    url.origin === 'https://fonts.gstatic.om',
   new NetworkFirst({
-    cacheName: "fonts",
+    cacheName: 'fonts',
     plugins: [
       new ExpirationPlugin({
         maxAgeSeconds: 60 * 60 * 24 * 356,
@@ -79,9 +79,9 @@ registerRoute(
 );
 
 registerRoute(
-  ({ url }) => url.origin.includes("qorebase.io"),
+  ({ url }) => url.origin.includes('qorebase.io'),
   new NetworkFirst({
-    cacheName: "apidata",
+    cacheName: 'apidata',
     plugins: [
       new ExpirationPlugin({
         maxAgeSeconds: 360,
@@ -94,7 +94,7 @@ registerRoute(
 registerRoute(
   ({ url }) => /\.(jpe?g|png)$/i.test(url.pathname),
   new StaleWhileRevalidate({
-    cacheName: "apiimages",
+    cacheName: 'apiimages',
     plugins: [
       new ExpirationPlugin({
         maxEntries: 30,
@@ -103,26 +103,38 @@ registerRoute(
   })
 );
 
-self.addEventListener("install", (event) => {
-  console.log("SW Install", event);
+self.addEventListener('install', (event) => {
+  console.log('SW Install', event);
 
   const asyncInstall = new Promise((resolve) => {
-    console.log("Waiting install to finish.");
+    console.log('Waiting install to finish.');
     setTimeout(resolve, 5000);
   });
 
   event.waitUntil(asyncInstall);
 });
-self.addEventListener("activate", (event) => {
-  console.log("SW Activate", event);
+self.addEventListener('activate', (event) => {
+  console.log('SW Activate', event);
 });
 
 // This allows the web app to trigger skipWaiting via
 // registration.waiting.postMessage({type: 'SKIP_WAITING'})
-self.addEventListener("message", (event) => {
-  if (event.data && event.data.type === "SKIP_WAITING") {
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
     self.skipWaiting();
   }
+});
+
+self.addEventListener('push', (event) => {
+  event.waitUntil(
+    self.registration
+      .showNotification('LuxSpace', {
+        icon: './icon-120.png',
+        body: event.data.text(),
+      })
+      .then(() => console.log('Push notification sent.'))
+      .catch((err) => console.log('Error sending push notification.', err))
+  );
 });
 
 // Any other custom service worker logic can go here.

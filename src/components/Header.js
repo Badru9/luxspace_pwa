@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export default function Header() {
   return (
     <header className="absolute z-50 w-full px-4">
@@ -47,6 +49,14 @@ export default function Header() {
                 >
                   Rewards
                 </a>
+              </li>
+              <li className="py-6 mx-3 md:py-0">
+                <Link
+                  to="/profile"
+                  className="text-black md:text-white hover:underline"
+                >
+                  Profile
+                </Link>
               </li>
             </ul>
           </div>
